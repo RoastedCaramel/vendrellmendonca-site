@@ -1,5 +1,8 @@
 FROM python:3.14-slim-trixie
 
+LABEL org.opencontainers.image.source=https://github.com/RoastedCaramel/vendrellmendonca-site
+LABEL org.opencontainers.image.description="Personal website"
+
 # Use the same uv version as ci.yml
 COPY --from=ghcr.io/astral-sh/uv:0.13.5 /uv /uvx /bin/
 
@@ -34,4 +37,4 @@ USER app
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 2"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && exec gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 2"]
