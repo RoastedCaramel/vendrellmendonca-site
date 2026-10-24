@@ -18,3 +18,24 @@ dev = [
     "pytest-django>=4.14.0",
     "ruff>=0.17.2",
 ]
+
+# using ruff for lint
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+extend-exclude = ["migrations"]
+
+#ruff linting rules
+[tool.ruff.lint]
+select = [
+    "E", "F",   # pycodestyle errors, pyflakes (basic mistakes)
+    "I",        # import sorting
+    "B",        # likely bugs (flake8-bugbear)
+    "UP",       # outdated syntax
+    "DJ",       # Django-specific checks
+    "S",        # security checks (bandit rules)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/*" = ["S101"]    # asserts are fine in tests
+"**/test_*.py" = ["S101"]
